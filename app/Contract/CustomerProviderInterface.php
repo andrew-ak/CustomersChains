@@ -2,4 +2,8 @@
 
 namespace CustomersChains\Contract;
 
-intarface 
+use CustomersChains\Models\Resultset\CustomerList;
+
+interface CustomerProviderInterface{
+    public function getCustomerList():CustomerList;
+}

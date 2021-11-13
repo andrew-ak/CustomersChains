@@ -4,9 +4,10 @@
 namespace CustomersChains\Providers;
 
 
+use CustomersChains\Contract\CustomerChainProviderInterface;
 use CustomersChains\Models\Resultset\CustomerChainList;
 
-class CsvCustomerChainProvider
+class CsvCustomerChainProvider implements CustomerChainProviderInterface
 {
     private string $filepath;
     private array $customerChainList;

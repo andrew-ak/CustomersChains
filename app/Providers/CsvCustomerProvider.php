@@ -4,10 +4,11 @@
 namespace CustomersChains\Providers;
 
 
+use CustomersChains\Contract\CustomerProviderInterface;
 use CustomersChains\Models\Customer;
 use CustomersChains\Models\Resultset\CustomerList;
 
-class CsvCustomerProvider
+class CsvCustomerProvider implements CustomerProviderInterface
 {
 
     private string $filepath;
@@ -27,7 +28,7 @@ class CsvCustomerProvider
         $this->filepath = $filepath;
     }
 
-    public function getCustomerList()
+    public function getCustomerList():CustomerList
     {
         if (!file_exists($this->filepath)){
             return new CustomerList();
