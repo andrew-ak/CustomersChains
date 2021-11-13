@@ -21,7 +21,12 @@ class CsvCustomerChainProvider
         $this->filepath = $filepath;
     }
 
-    public function save(CustomerChainList $customerChainList)
+    public function getFilepath():string
+    {
+        return $this->filepath;
+    }
+
+    public function save(CustomerChainList $customerChainList):void
     {
         $handle = fopen($this->filepath, 'a');
         fwrite($handle, self::HEADER);

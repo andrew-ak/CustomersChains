@@ -15,7 +15,5 @@ $chainBuilder = new CustomerChainBuilder();
 $customerChainList = $chainBuilder->buildCustomerChainList($customerList);
 $csvCustomerChainProvider = new CsvCustomerChainProvider(BASE_PATH.'/data/customer-chain.csv');
 $csvCustomerChainProvider->save($customerChainList);
-//var_dump($customerChainList->toArray());
-echo 'ok'.PHP_EOL;
-echo BASE_PATH.PHP_EOL;
-//composer dump-autoload -o
+echo 'Operation end.'.PHP_EOL;
+echo 'Duplicate saved to ' . $csvCustomerChainProvider->getFilepath() . PHP_EOL;
