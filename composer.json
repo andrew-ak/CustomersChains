@@ -1,0 +1,16 @@
+{
+  "name": "andrew-ak/customers_chains",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Andrew",
+      "email": "andrew.a.kuzmenko@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "CustomersChains\\": "app/"
+    }
+  }
+}
