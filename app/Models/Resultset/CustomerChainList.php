@@ -25,9 +25,12 @@ class CustomerChainList
         $this->list[] = $customerChain;
     }
 
+    /**
+     * @return CustomerChain[]
+     */
     public function getList():array
     {
-        return $this->getList();
+        return $this->list;
     }
 
     public function toArray()

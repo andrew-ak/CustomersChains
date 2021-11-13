@@ -4,10 +4,13 @@
 namespace CustomersChains\Providers;
 
 
+use CustomersChains\Models\Resultset\CustomerChainList;
+
 class CsvCustomerChainProvider
 {
     private string $filepath;
     private array $customerChainList;
+    private const HEADER = 'ID, PARENT_ID';
 
     /**
      * CsvCustomerChainProvider constructor.
@@ -18,8 +21,15 @@ class CsvCustomerChainProvider
         $this->filepath = $filepath;
     }
 
-    public function save()
+    public function save(CustomerChainList $customerChainList)
     {
-
+        $handle = fopen($this->filepath, 'a');
+        fwrite($handle, self::HEADER);
+        fwrite($handle, PHP_EOL);
+        foreach ($customerChainList->getList() as $customerChain){
+            fwrite($handle, implode(',', $customerChain->toArray()));
+            fwrite($handle, PHP_EOL);
+        }
+        fclose($handle);
     }
 }
