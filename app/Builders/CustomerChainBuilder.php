@@ -14,7 +14,8 @@ class CustomerChainBuilder
     public function build(CustomerList $customerList):customerChainList
     {
         $chainLinks = $this->buildChainLinks($customerList);
-        $chainLinks = $this->mergeChainLinks($chainLinks);
+        $customerChainList = $this->buildChainList($customerList, $chainLinks);
+        return $customerChainList;
     }
 
     public function buildChainLinks(CustomerList $customerList):array
@@ -24,29 +25,37 @@ class CustomerChainBuilder
             $chainLinks[$customer->getEmail()][] = $customer->getId();
             $chainLinks[$customer->getCard()][] = $customer->getId();
             $chainLinks[$customer->getPhone()][] = $customer->getId();
+            $tmpChainLink = array_merge($chainLinks[$customer->getEmail()], $chainLinks[$customer->getCard()], $chainLinks[$customer->getPhone()]);
+            $tmpChainLink = array_unique($tmpChainLink);
+            $chainLinks[$customer->getEmail()] = $tmpChainLink;
+            $chainLinks[$customer->getCard()] = $tmpChainLink;
+            $chainLinks[$customer->getPhone()] = $tmpChainLink;
         }
         return $chainLinks;
     }
 
-    public function mergeChainLinks(array $chainLinks)
+    public function buildChainList(CustomerList $customerList, array $chainLinks):CustomerChainList
     {
-        foreach ($chainLinks as $key1 => $chainLink1){
-            foreach ($chainLink1 as $customerId){
-                foreach ($chainLinks as $key2 => $chainLink2){
-                    if ($key1 == $key2){
-                        continue;
-                    }
-                    if (in_array($customerId, $chainLink2)){
-//                        var_dump($key2, $chainLink2);
-                        $chainLink1 = array_merge($chainLink1, $chainLink2);
-                        $chainLink1 = array_unique($chainLink1);
-                    }
-                }
-            }
+        foreach ($chainLinks as $key => $chainLink){
+            sort($chainLink);
+            $chainLinks[$key] = $chainLink;
         }
-//        var_dump($chainLinks);
-        die;
+        $customerChainList = new CustomerChainList();
+        foreach ($customerList->getList() as $customer){
+            $minId = $chainLinks[$customer->getEmail()][0];
+            $minId = $minId > $chainLinks[$customer->getCard()][0] ? $chainLinks[$customer->getCard()][0] : $minId;
+            $minId = $minId > $chainLinks[$customer->getPhone()][0] ? $chainLinks[$customer->getPhone()][0] : $minId;
+            $customer->setParentId($minId);
+            $customerChain = new CustomerChain();
+            $customerChain->assignArray([
+                'ID' => $customer->getId(),
+                'PARENT_ID' => $customer->getParentId(),
+            ]);
+            $customerChainList->add($customerChain);
+        }
+        return $customerChainList;
     }
+
     public function buildCustomerChainList(CustomerList $customerList)
     {
         $customerChains = [];

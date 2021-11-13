@@ -29,7 +29,7 @@ class CsvCustomerChainProvider implements CustomerChainProviderInterface
 
     public function save(CustomerChainList $customerChainList):void
     {
-        $handle = fopen($this->filepath, 'a');
+        $handle = fopen($this->filepath, 'w');
         fwrite($handle, self::HEADER);
         fwrite($handle, PHP_EOL);
         foreach ($customerChainList->getList() as $customerChain){
