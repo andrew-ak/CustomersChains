@@ -12,7 +12,7 @@ $csvCustomerProvider = new CsvCustomerProvider(BASE_PATH.'/data/customers.csv');
 $customerList = $csvCustomerProvider->getCustomerList();
 $chainBuilder = new CustomerChainBuilder();
 $customerChainList = $chainBuilder->build($customerList);
-//$customerChainList = $chainBuilder->buildCustomerChainList($customerList);
+//$customerChainList = $chainBuilder->buildCustomerChainList($customerList); //its a test method, his faster but not finish and not correctly output always
 $csvCustomerChainProvider = new CsvCustomerChainProvider(BASE_PATH.'/data/customer-chain.csv');
 $csvCustomerChainProvider->save($customerChainList);
 echo 'Operation end.'.PHP_EOL;
