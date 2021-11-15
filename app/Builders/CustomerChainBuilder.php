@@ -31,6 +31,15 @@ class CustomerChainBuilder
             $chainLinks[$customer->getCard()] = $tmpChainLink;
             $chainLinks[$customer->getPhone()] = $tmpChainLink;
         }
+        foreach ($chainLinks as $key => $chainLink){
+            foreach ($chainLinks as $key2 => $chainLink2){
+                if (count(array_intersect($chainLink, $chainLink2))){
+                    $tmpChainLink = array_merge($chainLink, $chainLink2);
+                    $tmpChainLink = array_unique($tmpChainLink);
+                    $chainLinks[$key] = $tmpChainLink;
+                }
+            }
+        }
         return $chainLinks;
     }
 
