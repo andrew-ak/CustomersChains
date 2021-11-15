@@ -33,6 +33,9 @@ class CustomerChainBuilder
         }
         foreach ($chainLinks as $key => $chainLink){
             foreach ($chainLinks as $key2 => $chainLink2){
+                if ($key == $key2){
+                    continue;
+                }
                 if (count(array_intersect($chainLink, $chainLink2))){
                     $tmpChainLink = array_merge($chainLink, $chainLink2);
                     $tmpChainLink = array_unique($tmpChainLink);
